@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-content',
@@ -16,9 +17,10 @@ export class ContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params
-      .subscribe(params => {
-        this.load(params['id']);
-      });
+      .pipe(
+        switchMap(val => this.http.get(`assets/rezepte/${val['id']}/${val['id']}.txt`, {responseType: 'text' as const}))
+      )
+      .subscribe(data => this.content = data);
   }
 
   load(param: any) { console.log(param)
