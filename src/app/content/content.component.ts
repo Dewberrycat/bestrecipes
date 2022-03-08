@@ -22,12 +22,4 @@ export class ContentComponent implements OnInit {
       )
       .subscribe(data => this.content = data);
   }
-
-  load(param: any) { console.log(param)
-    this.http.get(`assets/rezepte/${param}/${param}.txt`, {responseType: 'text' as const})
-      .subscribe(data => { console.log(data)
-        this.content = data;
-      });
-  }
-
 }
